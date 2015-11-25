@@ -1,8 +1,8 @@
-from .campaigns import CampaignsManager
+from .exceptions import UnknownRequestMethodException
 from urllib import urlencode
 
 import sendgrid
-import json
+
 
 class API(object):
     """Workaround for using SendGrid official API client.
@@ -24,8 +24,10 @@ class SendGridClientWrapper(object):
     (METHOD_GET, METHOD_POST) = (1, 2)
 
     def __init__(self, apikey):
-        self.campaigns = CampaignsManager(self)
-        self.sg_client = sendgrid.SendGridAPIClient(apikey=apikey, host=SendGridClientWrapper.HOST)
+        self.sg_client = sendgrid.SendGridAPIClient(
+            apikey=apikey,
+            host=SendGridClientWrapper.HOST
+        )
 
     def _call(self, api_endpoint, method):
         """Execute request in the official client
@@ -36,26 +38,22 @@ class SendGridClientWrapper(object):
         """
         if method == SendGridClientWrapper.METHOD_GET:
             return self.sg_client.get(api_endpoint)
-        else:
-            raise Exception('Undefined request method.')
 
-    def get(self, endpoint, params={}):
+        raise UnknownRequestMethodException('Unknown request method.')
+
+    def get(self, endpoint, **params):
         """Execute a GET request
 
         Args:
-            endpoint: string representing a valid API endpoint, like '/campaings'
+            endpoint: string representing a valid API endpoint,
+                      like '/campaings'
             params: url parameters as a dict
         """
-        if len(params) > 0:
+        if params:
             qs = urlencode(params)
             endpoint = endpoint + '?' + qs
 
-        api_request = API(endpoint)
-
-        status, result = self._call(api_request, SendGridClientWrapper.METHOD_GET)
-        json_result = json.loads(result)
-
-        if 'error' in final_result:
-            raise Exception(json_result['error'])
-
-        return json_result
+        return self._call(
+            API(endpoint),
+            SendGridClientWrapper.METHOD_GET
+        )
