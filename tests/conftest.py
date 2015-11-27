@@ -1,4 +1,5 @@
 from sendgridmarketingapi.wrapper import SendGridClientWrapper
+from sendgridmarketingapi.campaigns import CampaignsManager
 
 import pytest
 import os
@@ -16,7 +17,9 @@ def valid_api_key():
 
 @pytest.fixture
 def valid_wrapper():
-    apikey = valid_api_key()
-    wrapper = SendGridClientWrapper(apikey)
+    return SendGridClientWrapper(valid_api_key())
 
-    return wrapper
+
+@pytest.fixture
+def valid_campaign_manager():
+    return CampaignsManager(valid_wrapper())
