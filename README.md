@@ -1,5 +1,7 @@
 # SendGrid Marketing API Wrapper
 
+[![Requirements Status](https://requires.io/github/joaobarbosa/sendgrid-marketing-api/requirements.svg?branch=master)](https://requires.io/github/joaobarbosa/sendgrid-marketing-api/requirements/?branch=master)
+
 **Unnoficial** wrapper for interacting with the [SendGrid's Web API V3](https://sendgrid.com/docs/API_Reference/Web_API_v3/).
 
 Supports Python 2.7+. **NOT TESTED IN PYTHON 3** (yet).
