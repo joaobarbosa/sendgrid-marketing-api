@@ -40,3 +40,13 @@ cd /path/to/tests
 
 ./runtests.sh
 ```
+
+If you want to check radon analysis, you shoud use ```--with-radon``` or ```-r``` options:
+
+```sh
+./runtests.sh --with-radon
+```
+
+```sh
+./runtests.sh -r
+```
