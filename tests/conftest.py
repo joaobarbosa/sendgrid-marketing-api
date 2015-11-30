@@ -5,6 +5,9 @@ import pytest
 import os
 
 
+campaign_id = 1
+
+
 @pytest.fixture
 def valid_api_key():
     key = os.getenv('SENDGRID_TEST_API_KEY')
@@ -23,3 +26,12 @@ def valid_wrapper():
 @pytest.fixture
 def valid_campaign_manager():
     return CampaignsManager(valid_wrapper())
+
+
+@pytest.fixture(scope='session')
+def campaign_id_file(tmpdir_factory):
+    fn = tmpdir_factory.mktemp('data').join('cid.txt')
+    return fn
+
+# @pytest.fixture
+# def set

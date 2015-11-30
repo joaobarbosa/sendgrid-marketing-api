@@ -8,6 +8,7 @@ import json
 import pytest
 
 VALID_ENDPOINT = '/campaigns'
+INVALID_ENDPOINT = '/invalid-endpoint'
 VALID_GET_PARAMS = {'limit': 100, 'offset': 0}
 
 
@@ -20,7 +21,7 @@ class TestWrapper():
 
         assert api.endpoint is '/endpoint'
 
-    def test_instantiation_and_get(self, valid_api_key):
+    def test_instantiation(self, valid_api_key):
         with pytest.raises(TypeError):
             SendGridClientWrapper()
 
@@ -37,12 +38,20 @@ class TestWrapper():
 
         assert status == 200
 
-        status, data = wrapper.get(
+    def test_get(self, valid_wrapper):
+        status, data = valid_wrapper.get(
             endpoint=VALID_ENDPOINT,
             params=VALID_GET_PARAMS
         )
 
         assert status == 200
+
+        with pytest.raises(SendGridClientError):
+            status, data = valid_wrapper.get(
+                endpoint=INVALID_ENDPOINT
+            )
+
+            assert status == 404
 
     def test_call_unknown_request(self, valid_api_key):
         wrapper = SendGridClientWrapper(valid_api_key)
