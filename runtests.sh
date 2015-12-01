@@ -14,5 +14,5 @@ if  [[ $1 == "--with-radon" || $1 == "-r" ]]; then
     printf "\n-- Up next: radon\n-- Press [ENTER] key to keep going...\n"
     read
 
-    radon cc . -as --ignore=/tests
+    radon cc . -as --ignore=tests
 fi
