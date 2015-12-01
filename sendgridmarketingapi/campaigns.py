@@ -56,6 +56,11 @@ class CampaignsManager(object):
 
         return self.wrapper.post(endpoint=CampaignsManager.ENDPOINT, **params)
 
+    def get_campaign(self, campaign_id):
+        return self.wrapper.get(
+            endpoint=CampaignsManager.ENDPOINT + '/' + str(campaign_id)
+        )
+
     def delete_campaign(self, campaign_id):
         return self.wrapper.delete(
             endpoint=CampaignsManager.ENDPOINT + '/' + str(campaign_id)

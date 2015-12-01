@@ -5,7 +5,7 @@ from sendgrid.exceptions import SendGridClientError
 import time
 import json
 import pytest
-import os
+# import os
 
 
 class TestCampaigns():
@@ -31,6 +31,18 @@ class TestCampaigns():
         campaign_id_file.write(str(campaign_id))
 
         assert campaign_id_file.read() == str(campaign_id)
+
+    def test_get_campaign(self, valid_campaign_manager, campaign_id_file):
+        with pytest.raises(SendGridClientError):
+            status = valid_campaign_manager.get_campaign(0)
+
+            assert status == 404
+
+        campaign_id = int(campaign_id_file.read())
+
+        status, data = valid_campaign_manager.get_campaign(campaign_id)
+
+        assert status == 200
 
     def test_delete_campaign(self, request, valid_campaign_manager,
                              campaign_id_file):
