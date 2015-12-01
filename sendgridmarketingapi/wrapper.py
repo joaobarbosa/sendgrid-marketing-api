@@ -42,6 +42,9 @@ class SendGridClientWrapper(object):
         if method == SendGridClientWrapper.METHOD_POST:
             return self.sg_client.post(api_endpoint, data)
 
+        if method == SendGridClientWrapper.METHOD_PATCH:
+            return self.sg_client.patch(api_endpoint, data)
+
         if method == SendGridClientWrapper.METHOD_DELETE:
             return self.sg_client.delete(api_endpoint)
 
@@ -70,6 +73,19 @@ class SendGridClientWrapper(object):
         return self._call(
             API(endpoint),
             SendGridClientWrapper.METHOD_POST,
+            params
+        )
+
+    def patch(self, endpoint, **params):
+        """Execute a PATCH request
+
+        Args:
+            endpoint: (str) valid API endpoint, like '/campaings'
+            params: (dict) post data
+        """
+        return self._call(
+            API(endpoint),
+            SendGridClientWrapper.METHOD_PATCH,
             params
         )
 

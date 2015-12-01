@@ -44,6 +44,20 @@ class TestCampaigns():
 
         assert status == 200
 
+    def test_update_campaign(self, valid_campaign_manager, campaign_id_file):
+        with pytest.raises(SendGridClientError):
+            status = valid_campaign_manager.update_campaign(0)
+
+            assert status == 404
+
+        campaign_id = int(campaign_id_file.read())
+
+        status, data = valid_campaign_manager.update_campaign(
+            campaign_id, title='Test campaign upd - ' + str(int(time.time()))
+        )
+
+        assert status == 200
+
     def test_delete_campaign(self, request, valid_campaign_manager,
                              campaign_id_file):
         with pytest.raises(SendGridClientError):
