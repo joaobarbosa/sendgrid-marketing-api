@@ -36,7 +36,7 @@ Check the ```requirements.txt``` for a complete list of dependecies of this libr
 **Note**: You should set up an environment variable named **SENDGRID_TEST_API_KEY** with an valid api key for testing. If you didn't set it before, the script will ask before running the tests.
 
 ```sh
-cd /path/to/tests
+cd /path/to/project
 
 ./runtests.sh
 ```
