@@ -65,6 +65,7 @@ class TestCampaigns():
     def test_schedule_campaign(self, valid_campaign_manager, campaign_id_file):
         with pytest.raises(SendGridClientError):
             valid_campaign_manager.schedule_campaign(0, 0)
+            valid_campaign_manager.update_schedule_campaign(0, 0)
 
         campaign_id = int(campaign_id_file.read())
 
@@ -72,6 +73,12 @@ class TestCampaigns():
             valid_campaign_manager.schedule_campaign(
                 campaign_id,
                 int(time.time()) + (60 * 60 * 24 * 30)
+            )
+
+        with pytest.raises(SendGridClientError):
+            valid_campaign_manager.update_schedule_campaign(
+                campaign_id,
+                int(time.time()) + (60 * 60 * 24 * 31)
             )
 
     def test_delete_campaign(self, request, valid_campaign_manager,

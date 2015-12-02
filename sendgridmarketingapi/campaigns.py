@@ -128,6 +128,23 @@ class CampaignsManager(object):
             ), params={'send_at': timestamp}
         )
 
+    def update_schedule_campaign(self, campaign_id, timestamp):
+        """Update scheduled time of a campaing
+
+        Args:
+            campaign_id: (int) Campaign ID
+            timestamp: (int) Timestamp relative to a future date
+
+        Reference: https://sendgrid.com/docs/API_Reference/Web_API_v3
+                   /Marketing_Campaigns/campaigns.html
+                   #Update-a-Scheduled-Campaign-PATCH
+        """
+        return self.wrapper.patch(
+            endpoint='%s/%d/%s' % (
+                CampaignsManager.ENDPOINT, campaign_id, '/schedules/'
+            ), params={'send_at': timestamp}
+        )
+
     def delete_campaign(self, campaign_id):
         """Delete Campaigns
 
