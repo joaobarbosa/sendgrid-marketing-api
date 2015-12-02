@@ -80,7 +80,7 @@ class CampaignsManager(object):
         """
 
         return self.wrapper.patch(
-            endpoint=CampaignsManager.ENDPOINT + '/' + str(campaign_id),
+            endpoint='%s/%d' % (CampaignsManager.ENDPOINT, campaign_id),
             **params
         )
 
@@ -94,7 +94,7 @@ class CampaignsManager(object):
                    /Marketing_Campaigns/campaigns.html#View-a-Campaign-GET
         """
         return self.wrapper.get(
-            endpoint=CampaignsManager.ENDPOINT + '/' + str(campaign_id)
+            endpoint='%s/%d' % (CampaignsManager.ENDPOINT, campaign_id)
         )
 
     def send_campaign(self, campaign_id):
@@ -112,6 +112,22 @@ class CampaignsManager(object):
             )
         )
 
+    def schedule_campaign(self, campaign_id, timestamp):
+        """Schedule a Campaign
+
+        Args:
+            campaign_id: (int) Campaign ID
+            timestamp: (int) Timestamp relative to a future date
+
+        Reference: https://sendgrid.com/docs/API_Reference/Web_API_v3
+                   /Marketing_Campaigns/campaigns.html#Schedule-a-Campaign-POST
+        """
+        return self.wrapper.post(
+            endpoint='%s/%d/%s' % (
+                CampaignsManager.ENDPOINT, campaign_id, '/schedules/'
+            ), params={'send_at': timestamp}
+        )
+
     def delete_campaign(self, campaign_id):
         """Delete Campaigns
 
@@ -122,5 +138,5 @@ class CampaignsManager(object):
                    /Marketing_Campaigns/campaigns.html#Delete-a-Campaign-DELETE
         """
         return self.wrapper.delete(
-            endpoint=CampaignsManager.ENDPOINT + '/' + str(campaign_id)
+            endpoint='%s/%d' % (CampaignsManager.ENDPOINT, campaign_id)
         )
