@@ -97,6 +97,21 @@ class CampaignsManager(object):
             endpoint=CampaignsManager.ENDPOINT + '/' + str(campaign_id)
         )
 
+    def send_campaign(self, campaign_id):
+        """Send a Campaign
+
+        Args:
+            campaign_id: (int) Campaign ID
+
+        Reference: https://sendgrid.com/docs/API_Reference/Web_API_v3
+                   /Marketing_Campaigns/campaigns.html#Send-a-Campaign-POST
+        """
+        return self.wrapper.post(
+            endpoint='%s/%d/%s' % (
+                CampaignsManager.ENDPOINT, campaign_id, '/schedules/now'
+            )
+        )
+
     def delete_campaign(self, campaign_id):
         """Delete Campaigns
 

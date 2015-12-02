@@ -34,9 +34,7 @@ class TestCampaigns():
 
     def test_get_campaign(self, valid_campaign_manager, campaign_id_file):
         with pytest.raises(SendGridClientError):
-            status = valid_campaign_manager.get_campaign(0)
-
-            assert status == 404
+            valid_campaign_manager.get_campaign(0)
 
         campaign_id = int(campaign_id_file.read())
 
@@ -46,9 +44,7 @@ class TestCampaigns():
 
     def test_update_campaign(self, valid_campaign_manager, campaign_id_file):
         with pytest.raises(SendGridClientError):
-            status = valid_campaign_manager.update_campaign(0)
-
-            assert status == 404
+            valid_campaign_manager.update_campaign(0)
 
         campaign_id = int(campaign_id_file.read())
 
@@ -58,12 +54,19 @@ class TestCampaigns():
 
         assert status == 200
 
+    def test_send_campaign(self, valid_campaign_manager, campaign_id_file):
+        with pytest.raises(SendGridClientError):
+            valid_campaign_manager.send_campaign(0)
+
+        campaign_id = int(campaign_id_file.read())
+
+        with pytest.raises(SendGridClientError):
+            valid_campaign_manager.send_campaign(campaign_id)
+
     def test_delete_campaign(self, request, valid_campaign_manager,
                              campaign_id_file):
         with pytest.raises(SendGridClientError):
-            status = valid_campaign_manager.delete_campaign(0)
-
-            assert status == 404
+            valid_campaign_manager.delete_campaign(0)
 
         campaign_id = int(campaign_id_file.read())
 
