@@ -5,7 +5,6 @@ from sendgrid.exceptions import SendGridClientError
 import time
 import json
 import pytest
-# import os
 
 
 class TestCampaigns():
