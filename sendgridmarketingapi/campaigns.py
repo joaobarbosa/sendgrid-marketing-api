@@ -60,7 +60,7 @@ class CampaignsManager(object):
         Note: you can only update campaigns in DRAFT mode.
 
         Args:
-            title: (str) Campaign title (max. of 100 characters)
+            campaign_id: (int) Campaign ID
 
             **params:
                 title: (str) (optional) Title
